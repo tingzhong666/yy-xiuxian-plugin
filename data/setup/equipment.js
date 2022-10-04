@@ -1,6 +1,6 @@
 export default {
-  fabao: [
-    {
+  fabao: {
+    maobi: {
       name: "毛笔",
       value: 100,
       attack: 100,
@@ -10,9 +10,9 @@ export default {
       baoshang: 0.01,
       qiyun: 0
     }
-  ],
-  arms: [
-    {
+  },
+  arms: {
+    xiaodao: {
       name: "小刀",
       value: 100,
       attack: 100,
@@ -22,9 +22,9 @@ export default {
       baoshang: 0.01,
       qiyun: 0
     }
-  ],
-  hujia: [
-    {
+  },
+  hujia: {
+    xiaofu: {
       name: "校服",
       value: 100,
       attack: 100,
@@ -34,9 +34,9 @@ export default {
       baoshang: 0.01,
       qiyun: 0
     }
-  ],
-  hutui: [
-    {
+  },
+  hutui: {
+    xiaoku: {
       name: "校裤",
       value: 100,
       attack: 100,
@@ -46,5 +46,5 @@ export default {
       baoshang: 0.01,
       qiyun: 0
     }
-  ]
+  },
 }

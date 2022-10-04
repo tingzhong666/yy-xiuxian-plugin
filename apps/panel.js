@@ -1,7 +1,7 @@
 import config from "../config.js";
 import plugin from "../../../lib/plugins/plugin.js";
-import fs from "node:fs/promises";
-import path from "node:path";
+import Game_panel from "../game/panel.js";
+import jingjie from "../data/setup/jingjie.js"
 
 const cmd_cfg =
 {
@@ -12,9 +12,14 @@ const cmd_cfg =
   rule: [
     {
       // 注册游戏
-      reg: "^register$",
+      reg: "^加入修仙$",
       fnc: "register"
-    }
+    },
+    {
+      // 查看存档
+      reg: "^查看信息$",
+      fnc: "read_panel"
+    },
   ]
 };
 
@@ -35,13 +40,36 @@ export class panel extends plugin
     super(cmd_cfg)
   }
 
-  async register ()
+  // 加入游戏
+  async register (e)
   {
-    let res = await fs.readFile(path.join(config.yy_path, "./data/player/player.json"));
-    res = JSON.parse(res);
-    res.push(1);
-    res = JSON.stringify(res);
-    await fs.writeFile(path.join(config.yy_path, "./data/player/player.json"), res);
-    await this.reply("register");
+    let game_panel = new Game_panel(e);
+    if(!(await game_panel.play())) {
+      this.reply("已在游戏中！");
+    }
+    else {
+      this.reply("加入成功");
+    }
+  }
+
+  // 查看存档
+  async read_panel (e)
+  {
+    let game_panel = new Game_panel(e.user_id);
+    let str = "";
+
+    Object.keys(game_panel.data).forEach(v => {
+      if(game_panel.data[v].name == "境界")
+      {
+        str += `${game_panel.data[v].name}：${jingjie[game_panel.data[v].value].name}\n`;
+        return;
+      }
+
+      str += `${game_panel.data[v].name}：${game_panel.data[v].value}\n`;
+    });
+    
+    // logger.info(game_panel)
+
+    this.reply(str);
   }
 }
