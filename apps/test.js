@@ -1,6 +1,5 @@
 import config from "../config.js";
 import plugin from "../../../lib/plugins/plugin.js";
-import jingjie from "../data/setup/jingjie.js";
 
 const cmd_cfg =
 {
@@ -35,6 +34,6 @@ export class test extends plugin
 
   async test ()
   {
-    await this.reply("666 " + jingjie[0].name);
+    await this.reply("666 ");
   }
 }
