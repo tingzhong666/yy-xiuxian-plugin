@@ -1,7 +1,6 @@
 import config from "../config.js";
 import plugin from "../../../lib/plugins/plugin.js";
-import Game_panel from "../game/panel.js";
-import jingjie from "../data/setup/jingjie.js"
+import manage from "../manage/index.js";
 
 const cmd_cfg =
 {
@@ -19,6 +18,11 @@ const cmd_cfg =
       // 查看存档
       reg: "^查看信息$",
       fnc: "read_panel"
+    },
+    {
+      // 改名
+      reg: "^改名*",
+      fnc: "rename"
     },
   ]
 };
@@ -43,33 +47,50 @@ export class panel extends plugin
   // 加入游戏
   async register (e)
   {
-    let game_panel = new Game_panel(e);
-    if(!(await game_panel.play())) {
-      this.reply("已在游戏中！");
+    if(!(await manage.user.add(e.user_id))) {
+      await this.reply("已在游戏中！");
     }
     else {
-      this.reply("加入成功");
+      await this.reply("加入成功");
     }
   }
 
   // 查看存档
   async read_panel (e)
   {
-    let game_panel = new Game_panel(e.user_id);
+    let user_panel = await manage.user.panel_get(e.user_id);
     let str = "";
+    str += "道号：" + user_panel.name + "\n";
+    str += "道宣：" + user_panel.daoxuan + "\n";
+    str += "修为：" + user_panel.xiuwei + "\n";
+    str += "灵石：" + user_panel.lingshi + "\n";
+    str += "修炼速度：" + user_panel.xiuliansudu + "/5s\n";
+    str += "血量：" + user_panel.hp + "\n";
+    str += "防御力：" + user_panel.fangyuli + "\n";
+    str += "攻击：" + user_panel.atk + "\n";
+    str += "暴击率：" + user_panel.baojilv + "%\n";
+    str += "暴伤：" + user_panel.baoshang + "%\n";
+    str += "气运：" + user_panel.qiyun + "\n";
+    str += "门派：" + user_panel.menpai + "\n";
+    str += "阵营：" + user_panel.zhenying + "\n";
+    str += "境界：" + user_panel.jingjie + "\n";
+    str += "武器：" + user_panel.wuqi + "\n";
+    str += "法宝：" + user_panel.fabao + "\n";
+    str += "衣服：" + user_panel.yifu + "\n";
+    str += "裤子：" + user_panel.kuzi + "\n";
 
-    Object.keys(game_panel.data).forEach(v => {
-      if(game_panel.data[v].name == "境界")
-      {
-        str += `${game_panel.data[v].name}：${jingjie[game_panel.data[v].value].name}\n`;
-        return;
-      }
+    await this.reply(str);
+  }
 
-      str += `${game_panel.data[v].name}：${game_panel.data[v].value}\n`;
-    });
-    
-    // logger.info(game_panel)
+  // 改名
+  async rename(e){
+    // 剔除命令前缀
+    let reg = new RegExp("^" + config.cmd_pre);
+    let new_name = e.msg.replace(reg, "");
+    // 剔除命令文本
+    reg = new RegExp("^改名");
+    new_name = new_name.replace("改名", "");
 
-    this.reply(str);
+    await manage.user.name_edit(e.user_id, new_name);
   }
 }
