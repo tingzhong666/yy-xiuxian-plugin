@@ -26,7 +26,8 @@ export default {
       qiyun_ewai_guding: 0,
       baojilv: 0.01,
       baoshang: 0.01,
-      type: "fabao"
+      zhonglei: "guding",
+      type: "fabao",
     },
     xiaodao: {
       name: "小刀",
@@ -44,7 +45,8 @@ export default {
       qiyun_ewai_guding: 0,
       baojilv: 0.01,
       baoshang: 0.01,
-      type: "wuqi"
+      zhonglei: "guding",
+      type: "wuqi",
     },
     xiaofu: {
       name: "校服",
@@ -62,7 +64,8 @@ export default {
       qiyun_ewai_guding: 0,
       baojilv: 0.01,
       baoshang: 0.01,
-      type: "yifu"
+      zhonglei: "guding",
+      type: "yifu",
     },
     xiaoku: {
       name: "校裤",
@@ -80,7 +83,8 @@ export default {
       qiyun_ewai_guding: 0,
       baojilv: 0.01,
       baoshang: 0.01,
-      type: "kuzi"
+      zhonglei: "guding",
+      type: "kuzi",
     },
   },
 }

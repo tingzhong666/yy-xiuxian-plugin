@@ -38,8 +38,12 @@ export default {
     });
   },
 
-  // set集合 单个集合 多个元素 添加
-  // arr 数组 属性只能为字符串
+  /**
+   * set集合 单个集合 多个元素 添加
+   * arr 数组 属性只能为字符串
+   * @param {*} key 
+   * @param {*} arr 
+   */
   async set_add_arr(key, arr){
     // 添加
     arr.forEach(async v => {
@@ -47,7 +51,7 @@ export default {
     });
   },
 
-  // set集合 多个集合 多个元素 添加
+  // 
   /*
     例：将添加2个集合 hello:a   hello:b
     key = "hello:"
@@ -55,6 +59,16 @@ export default {
       a: ["123", "321"],
       b: ["235235"],
     }
+  */
+ /**
+  * set集合 多个集合 多个元素 添加
+  * 例：将添加2个集合 hello:a   hello:b
+    key = "hello:"
+    obj = {
+      a: ["123", "321"],
+      b: ["235235"],
+  * @param {*} key 
+  * @param {*} obj 
   */
   async set_add_obj(key, obj){
     // 批量集合 循环

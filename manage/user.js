@@ -1,7 +1,11 @@
 import model from "../model/index.js";
 
 export default {
-  // 用户面板 获取
+  /**
+   * 用户面板 获取 不展开具体数值
+   * @param {String} user_id 用户id 即qq
+   * @returns {Object}
+   */
   async  panel_get(user_id){
     let user = await model.user.detail.query(user_id);
     // 装备、门派、阵营、境界
@@ -209,4 +213,21 @@ export default {
     user.name = new_name;
     model.user.detail.edt(user_id, user);
   },
+  /**
+   * 境界突破
+   * @param {String} user_id 用户id 即qq
+   * @returns {Number} 修为不够还差的修为|-1为成功
+   */
+  async jingjie_tupo(user_id){
+    // 查看当前修为是否符合
+    let user = await model.user.detail.query(user_id);
+    let suoxu_xiuwei = (await model.jingjie.detail.query(user.jingjie)).xiuwei;
+    if (user.xiuwei*1 < suoxu_xiuwei*1) return suoxu_xiuwei - user.xiuwei;
+
+    // 境界等级+1 修为扣去
+    user.jingjie = (user.jingjie*1) + 1;
+    user.xiuwei -= suoxu_xiuwei;
+    await model.user.detail.edt(user_id, user);
+    return -1;
+  }
 }

@@ -11,6 +11,7 @@ const files = fs
 let apps = {};
 for (let file of files) {
   let name = file.replace('.js', '');
+  if (name == "com") continue;
   apps[name] = (await import(`./apps/${file}`))[name];
 }
 
