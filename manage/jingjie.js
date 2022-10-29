@@ -7,7 +7,12 @@ export default {
   },
   // 境界列表 获取
   async list(){
-    return await model.jingjie.list.query();
+    let jingjie_id_arr = await model.jingjie.list.query();
+    let res = [];
+    await Promise.all(jingjie_id_arr.map(async jingjie_id => {
+      res.push(await model.jingjie.detail.query(jingjie_id));
+    }));
+    return res;
   },
   // 境界增加 批量
   /**
